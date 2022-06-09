@@ -22,14 +22,23 @@ namespace az204_blob
         private static async Task ProcessAsync()
         {
             // Copy the connection string from the portal in the variable below.
-            string storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=novocaplearn;AccountKey=8YD3OKgqvK8KkjjM5WK13u2wNwqCjlavN1axRm+XvuI/H/3etUqewU0kp+qQ0CPyw6Pfc2945mk7+AStIN56JQ==;EndpointSuffix=core.windows.net";
+            string storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=example;AccountKey=example==;EndpointSuffix=core.windows.net";
 
             // Create a client that can authenticate with a connection string
             BlobServiceClient blobServiceClient = new BlobServiceClient(storageConnectionString);
 
             // EXAMPLE CODE STARTS BELOW HERE
 
+            //Create a unique name for the container
+            string containerName = "wtblob" + Guid.NewGuid().ToString();
 
+            // Create the container and return a container client object
+            BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
+            Console.WriteLine("A container named '" + containerName + "' has been created. " +
+                "\nTake a minute and verify in the portal." + 
+                "\nNext a file will be created and uploaded to the container.");
+            Console.WriteLine("Press 'Enter' to continue.");
+            Console.ReadLine();
         }
     }
 }
